@@ -29,12 +29,15 @@ endif()
 #set(CMAKE_BUILD_TYPE Debug)
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+
 
 
 # FIND_PACKAGE ( Threads REQUIRED )
 
 include_directories(
 	${SDL2_INCLUDE_DIR}
+	${SDL2_IMAGE_INCLUDE_DIR}
 	# ${GTK3_INCLUDE_DIRS}
 	# ${GTKMM_INCLUDE_DIRS}
 #	${Boost_INCLUDE_DIRS}
@@ -43,6 +46,8 @@ include_directories(
 
 MESSAGE( STATUS "Hey yall!" )
 MESSAGE( STATUS ${SDL2_INCLUDE_DIR} )
+MESSAGE( STATUS ${CMAKE_BINARY_DIR} )
+
 
 # Look in the src subdirectory to find its CMakeLists.txt so we can build the executable
 # add_subdirectory(src)
@@ -50,6 +55,10 @@ MESSAGE( STATUS ${SDL2_INCLUDE_DIR} )
 
 file(GLOB SOURCE_FILES src/*.cpp)
 file(GLOB HEADER_FILES src/*.hpp)
+
+file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
+
+# file(GLOB HEADER_FILES src/*.hpp)
 # file(GLOB GLADE_FILES *.glade)
 
 # set(SOURCE_FILES 
@@ -78,6 +87,7 @@ add_executable(orbiterSim ${HEADER_FILES} ${SOURCE_FILES} )
 # Link the target to the GTK+ libraries
 target_link_libraries(orbiterSim 
 	${SDL2_LIBRARY}
+	${SDL2_IMAGE_LIBRARY}
 	# ${GTK3_LIBRARIES}
 	# ${GTKMM_LIBRARIES}
 	# ${CMAKE_THREAD_LIBS_INIT}
